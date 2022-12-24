@@ -1,7 +1,7 @@
 <template>
     <div class="inputBox shadow">
-        <input type="text" v-model="newTodoItem" v-on:keyup.enter="addTodo" />
-        <span class="addContainer" v-on:click="addTodo">
+        <input type="text" v-model="newTodoItem" v-on:keyup.enter="clickAddBtn" />
+        <span class="addContainer" v-on:click="clickAddBtn">
             <i class="fa-solid fa-plus addBtn"></i>
         </span>
     </div>
@@ -15,10 +15,10 @@ export default {
         }
     },
     methods: {
-        addTodo: function () {
+        clickAddBtn: function () {
             if (this.newTodoItem !== '') {
-                var obj = { completed: false, item: this.newTodoItem };
-                localStorage.setItem(this.newTodoItem, JSON.stringify(obj));
+                // emit은 상위 vue에 이벤트 전달 한다. this.$emit('이벤트 이름', 인자1, 인자2 ...);
+                this.$emit('emitAddItem', this.newTodoItem);
                 this.clearInputBox();
             }
         },
