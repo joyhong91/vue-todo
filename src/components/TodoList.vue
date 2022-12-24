@@ -36,6 +36,7 @@ export default {
     },
     created: function() {
         var localStorageItem = "";
+        console.log("Here");
         if(localStorage.length > 0 ) {
             for(var i = 0; i < localStorage.length; i++) {
                 localStorageItem = localStorage.key(i);
