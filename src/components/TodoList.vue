@@ -83,9 +83,10 @@ li {
 }
 
 .list-enter-from,
-/* .list-enter, */
-.list-leave-to {
+.list-enter,
+.list-leave-to, 
+.list-leave{
     opacity: 0;
-    transform: translateX(30px);
+    transform: translateX(3px);
 }
 </style>
