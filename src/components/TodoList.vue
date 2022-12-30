@@ -1,27 +1,28 @@
 <template>
     <div>
-        <dl>
-            <dt v-show="propsData.todo.length > 0">해야하는거야 게으르지마</dt>
-            <!-- TODO v-if로  section나누기 -->
-            <dd v-for="todoItem, index in propsData.todo" class="shadow" v-bind:key="todoItem.key">
-                <i class="fa-solid fa-check checkBtn" v-on:click="clickToggleItem('todo', index)" v-bind:class="{checkBtnCompleted: todoItem.completed}"></i>
-                <span v-bind:class="{textCompleted: todoItem.completed}">{{ todoItem.item }}</span>
-                <span class="removeBtn" v-on:click="clickDeleteBtn(todoItem.item, index)">
+        <p v-show="propsData.todo.length > 0">해야하는거야 게으르지마</p>
+        <transition-group name="list" tag ="ul">
+            <li v-for="todoItem, index in propsData.todo" class="shadow" :key="todoItem.item+index">
+                <i class="fa-solid fa-check checkBtn" v-on:click="clickToggleItem('todo', index)"
+                    v-bind:class="{ checkBtnCompleted: todoItem.completed }"></i>
+                <span v-bind:class="{ textCompleted: todoItem.completed }">{{ todoItem.item }}</span>
+                <span class="removeBtn" v-on:click="clickDeleteBtn('todo', todoItem.item, index)">
                     <i class="fas fa-trash-alt"></i>
                 </span>
-            </dd>
-        </dl>
-        
-        <dl>
-            <dt v-show="propsData.completed.length > 0">다했어! 잘했어!</dt>
-            <dd v-for="completedItem, index in propsData.completed" class="shadow" v-bind:key="completedItem.key">
-                <i class="fa-solid fa-check checkBtn checkBtnCompleted" v-on:click="clickToggleItem('completed', index)"></i>
+            </li>
+        </transition-group>
+
+        <p v-show="propsData.completed.length > 0">다했어! 잘했어!</p>
+        <transition-group name="list" tag ="ul">
+            <li v-for="completedItem, index in propsData.completed" class="shadow" :key="completedItem.item+index">
+                <i class="fa-solid fa-check checkBtn checkBtnCompleted"
+                    v-on:click="clickToggleItem('completed', index)"></i>
                 <span class="textCompleted">{{ completedItem.item }}</span>
-                <span class="removeBtn" v-on:click="clickDeleteBtn(completedItem.item, index)">
+                <span class="removeBtn" v-on:click="clickDeleteBtn('completed', completedItem.item, index)">
                     <i class="fas fa-trash-alt"></i>
                 </span>
-            </dd>
-        </dl>
+            </li>
+        </transition-group>
     </div>
 </template>
 
@@ -29,10 +30,10 @@
 export default {
     props: ['propsData'],
     methods: {
-        clickDeleteBtn: function(itemParam, index) {
-            this.$emit('emitRemoveItem', itemParam, index);
+        clickDeleteBtn: function (status, itemParam, index) {
+            this.$emit('emitRemoveItem', status, itemParam, index);
         },
-        clickToggleItem: function(status, index) {
+        clickToggleItem: function (status, index) {
             this.$emit('emitToggleItem', status, index);
         }
     }
@@ -40,10 +41,11 @@ export default {
 </script>
 
 <style scoped>
-dl {
+ul {
     padding-left: 0;
 }
-dd {
+
+li {
     display: flex;
     min-height: 50px;
     height: 50px;
@@ -53,11 +55,13 @@ dd {
     background: #fff;
     border-radius: 5px;
 }
+
 .checkBtn {
     line-height: 45px;
     color: #62acde;
     margin-right: 5px;
 }
+
 .checkBtnCompleted {
     color: #b3adad;
 }
@@ -70,5 +74,18 @@ dd {
 .removeBtn {
     margin-left: auto;
     color: #de4343;
+}
+
+/* list item transition 효과 구현 */
+.list-enter-active,
+.list-leave-active {
+    transition: all 0.3s ease;
+}
+
+.list-enter-from,
+/* .list-enter, */
+.list-leave-to {
+    opacity: 0;
+    transform: translateX(30px);
 }
 </style>
