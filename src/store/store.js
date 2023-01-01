@@ -7,19 +7,7 @@ Vue.use(Vuex);
 const storage = {
     fetch() {
         //=fetch: function() {}
-
-        let a = {
-            'test1':"test1",
-            "test2": "test2"
-        }
-
-        let b = {
-            "test3": "test3",
-            ...a            
-        }
-
-        console.log(b);
-
+        
         const todoArr = [];
         const completedArr = [];
 
@@ -51,8 +39,11 @@ export const store = new Vuex.Store({
         completedItems: storage.fetch()['completed'],
     },
     getters: {
-        items(state) {
-            return {todoItems: state.todoItems, completedItems: state.completedItems};
+        todoItems(state) {
+            return state.todoItems;
+        },
+        completedItems(state) {
+            return state.completedItems;
         }
     },
     mutations: {

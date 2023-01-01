@@ -43,12 +43,13 @@ export default {
         // }
     },
     computed: {
-        todoItems() {
-            return this.$store.getters.items.todoItems;
-        },
-        completedItems() {
-            return this.$store.getters.items.completedItems;
-        }
+        ...mapGetters(['todoItems', 'completedItems'])
+        // todoItems() {
+        //     return this.$store.getters.items.todoItems;
+        // },
+        // completedItems() {
+        //     return this.$store.getters.items.completedItems;
+        // }
     }
 }
 </script>
