@@ -27,16 +27,16 @@
 import Modal from './common/Modal.vue';
 
 export default {
-    data: function () {
+    data() {
         return {
             newTodoItem: "",
             showModal: false
         }
     },
     methods: {
-        clickAddBtn: function () {
-            console.log(this.newTodoItem);
-            console.log(this.newTodoItem.trim().length)
+        clickAddBtn() {
+            // console.log(this.newTodoItem);
+            // console.log(this.newTodoItem.trim().length)
             if (this.newTodoItem !== '' && this.newTodoItem.trim().length > 0) {
                 // emit은 상위 vue에 이벤트 전달 한다. this.$emit('이벤트 이름', 인자1, 인자2 ...);
                 this.$emit('emitAddItem', this.newTodoItem);
@@ -45,12 +45,12 @@ export default {
                 this.showModal = true;
             }
         },
-        clearInputBox: function () {
+        clearInputBox() {
             this.newTodoItem = "";
         }
     },
     components: {
-        Modal: Modal
+        Modal
     }
 }
 </script>

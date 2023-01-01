@@ -30,10 +30,10 @@
 export default {
     props: ['propsData'],
     methods: {
-        clickDeleteBtn: function (status, itemParam, index) {
+        clickDeleteBtn(status, itemParam, index) {
             this.$emit('emitRemoveItem', status, itemParam, index);
         },
-        clickToggleItem: function (status, index) {
+        clickToggleItem(status, index) {
             this.$emit('emitToggleItem', status, index);
         }
     }
@@ -83,9 +83,10 @@ li {
 }
 
 .list-enter-from,
-/* .list-enter, */
-.list-leave-to {
+.list-enter,
+.list-leave-to, 
+.list-leave{
     opacity: 0;
-    transform: translateX(30px);
+    transform: translateX(3px);
 }
 </style>

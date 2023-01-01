@@ -17,32 +17,32 @@ import TodoList from './components/TodoList.vue'
 import TodoFooter from './components/TodoFooter.vue'
 
 export default {
-  data: function () {
+  data() {
     return {
       todoItems: [],
       completedItems: []
     }
   },
   methods: {
-    addItem: function (todoItem) {
-      var obj = { completed: false, item: todoItem };
+    addItem(todoItem) {
+      const obj = { completed: false, item: todoItem };
       localStorage.setItem(todoItem, JSON.stringify(obj));
       this.todoItems.push(obj);
     },
-    removeItem: function (status, itemParam, index) {
-      var targetItems = status == 'todo' ? this.todoItems : this.completedItems;
+    removeItem(status, itemParam, index) {
+      const targetItems = status == 'todo' ? this.todoItems : this.completedItems;
       localStorage.removeItem(itemParam);
       targetItems.splice(index, 1);
     },
-    removeAllItems: function () {
+    removeAllItems() {
       localStorage.clear();
       this.todoItems = [];
       this.completedItems = [];
     },
-    toggleItem: function (status, index) {
-      var isTodo = status === 'todo';
-      var itemObj = isTodo ? this.todoItems[index] : this.completedItems[index];
-      var item = itemObj.item;
+    toggleItem (status, index) {
+      const isTodo = status === 'todo';
+      const itemObj = isTodo ? this.todoItems[index] : this.completedItems[index];
+      const item = itemObj.item;
 
       itemObj.completed = !itemObj.completed;
 
@@ -60,11 +60,11 @@ export default {
 
     }
   },
-  created: function () {
-    var itemKey = "";
-    var itemObj = {};
+  created () {
+    let itemKey = "";
+    let itemObj = {};
     if (localStorage.length > 0) {
-      for (var i = 0; i < localStorage.length; i++) {
+      for (let i = 0; i < localStorage.length; i++) {
         itemKey = localStorage.key(i);
 
         if (itemKey != "" && itemKey !== 'loglevel:webpack-dev-server') {
@@ -79,10 +79,10 @@ export default {
     }
   },
   components: {
-    'TodoHeader': TodoHeader,
-    'TodoInput': TodoInput,
-    'TodoList': TodoList,
-    'TodoFooter': TodoFooter
+    TodoHeader,
+    TodoInput,
+    TodoList,
+    TodoFooter
   }
 
 }
