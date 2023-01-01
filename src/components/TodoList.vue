@@ -1,24 +1,24 @@
 <template>
     <div>
-        <p v-show="this.$store.state.todoItems.length > 0">해야하는거야 게으르지마</p>
+        <p v-show="this.todoItems.length > 0">해야하는거야 게으르지마</p>
         <ul>
-            <li v-for="todoItem, index in this.$store.state.todoItems" class="shadow" :key="todoItem.item+index">
-                <i class="fa-solid fa-check checkBtn" v-on:click="clickToggleItem('todo', index)"
+            <li v-for="todoItem, index in this.todoItems" class="shadow" :key="todoItem.item + index">
+                <i class="fa-solid fa-check checkBtn" v-on:click="toggleItem({isDone: todoItem.completed, index})"
                     v-bind:class="{ checkBtnCompleted: todoItem.completed }"></i>
                 <span v-bind:class="{ textCompleted: todoItem.completed }">{{ todoItem.item }}</span>
-                <span class="removeBtn" v-on:click="clickDeleteBtn('todo', todoItem.item, index)">
+                <span class="removeBtn" v-on:click="removeItem({itemParam: todoItem, index})">
                     <i class="fas fa-trash-alt"></i>
                 </span>
             </li>
         </ul>
 
-        <p v-show="this.$store.state.completedItems.length > 0">다했어! 잘했어!</p>
+        <p v-show="this.completedItems.length > 0">다했어! 잘했어!</p>
         <ul>
-            <li v-for="completedItem, index in this.$store.state.completedItems" class="shadow" :key="completedItem.item+index">
+            <li v-for="completedItem, index in this.completedItems" class="shadow" :key="completedItem.item + index">
                 <i class="fa-solid fa-check checkBtn checkBtnCompleted"
-                    v-on:click="clickToggleItem('completed', index)"></i>
+                    v-on:click="toggleItem({isDone: completedItem.completed, index})"></i>
                 <span class="textCompleted">{{ completedItem.item }}</span>
-                <span class="removeBtn" v-on:click="clickDeleteBtn('completed', completedItem.item, index)">
+                <span class="removeBtn" v-on:click="removeItem({itemParam: completedItem, index})">
                     <i class="fas fa-trash-alt"></i>
                 </span>
             </li>
@@ -27,15 +27,27 @@
 </template>
 
 <script>
+import { mapGetters, mapMutations } from 'vuex'
+
 export default {
     methods: {
-        clickDeleteBtn(status, itemParam, index) {
-            this.$store.commit('removeItem', {status, item: itemParam, index});
-            // this.$emit('emitRemoveItem', status, itemParam, index);
+        ...mapMutations(['removeItem','toggleItem'])
+        // clickDeleteBtn(status, item, index) {
+        //     console.log(mapMutations);
+        //     this.$store.commit('removeItem', { status, item, index });
+        //     // this.$emit('emitRemoveItem', status, itemParam, index);
+        // },
+        // clickToggleItem(status, index) {
+        //     this.$store.commit('toggleItem', { status, index });
+        //     // this.$emit('emitToggleItem', status, index);
+        // }
+    },
+    computed: {
+        todoItems() {
+            return this.$store.getters.items.todoItems;
         },
-        clickToggleItem(status, index) {
-            this.$store.commit('toggleItem',{status, index});
-            // this.$emit('emitToggleItem', status, index);
+        completedItems() {
+            return this.$store.getters.items.completedItems;
         }
     }
 }

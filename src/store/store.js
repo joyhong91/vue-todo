@@ -8,6 +8,18 @@ const storage = {
     fetch() {
         //=fetch: function() {}
 
+        let a = {
+            'test1':"test1",
+            "test2": "test2"
+        }
+
+        let b = {
+            "test3": "test3",
+            ...a            
+        }
+
+        console.log(b);
+
         const todoArr = [];
         const completedArr = [];
 
@@ -38,25 +50,29 @@ export const store = new Vuex.Store({
         todoItems: storage.fetch()['todo'],
         completedItems: storage.fetch()['completed'],
     },
+    getters: {
+        items(state) {
+            return {todoItems: state.todoItems, completedItems: state.completedItems};
+        }
+    },
     mutations: {
         addItem(state, itemParam) {
             const obj = { completed: false, item: itemParam };
             localStorage.setItem(itemParam, JSON.stringify(obj));
             state.todoItems.push(obj);
         },
-        removeItem(state, itemParamObj) {
-            const targetItems = itemParamObj.status == 'todo' ? state.todoItems : state.completedItems;
-            localStorage.removeItem(itemParamObj.item);
-            targetItems.splice(itemParamObj.index, 1);
+        removeItem(state, {itemParam, index}) {
+            const targetItems = !itemParam.completed ? state.todoItems : state.completedItems;
+            localStorage.removeItem(itemParam.item);
+            targetItems.splice(index, 1);
         },
         removeAllItems(state) {
             localStorage.clear();
             state.todoItems = [];
             state.completedItems = [];
         },
-        toggleItem (state, param) {
-            const isTodo = param.status === 'todo';
-            const itemObj = isTodo ? state.todoItems[param.index] : state.completedItems[param.index];
+        toggleItem (state, {isDone, index}) {
+            const itemObj = !isDone ? state.todoItems[index] : state.completedItems[index];
             const item = itemObj.item;
       
             itemObj.completed = !itemObj.completed;
@@ -65,11 +81,11 @@ export const store = new Vuex.Store({
             localStorage.setItem(item, JSON.stringify(itemObj));
       
             //todo --> completed
-            if (isTodo) {
-              state.todoItems.splice(param.index, 1);
+            if (!isDone) {
+              state.todoItems.splice(index, 1);
               state.completedItems.push(itemObj);
             } else {
-              state.completedItems.splice(param.index, 1);
+              state.completedItems.splice(index, 1);
               state.todoItems.push(itemObj);
             }
       
