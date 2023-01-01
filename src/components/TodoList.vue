@@ -1,8 +1,8 @@
 <template>
     <div>
-        <p v-show="propsData.todo.length > 0">해야하는거야 게으르지마</p>
-        <transition-group name="list" tag ="ul">
-            <li v-for="todoItem, index in propsData.todo" class="shadow" :key="todoItem.item+index">
+        <p v-show="this.$store.state.todoItems.length > 0">해야하는거야 게으르지마</p>
+        <ul>
+            <li v-for="todoItem, index in this.$store.state.todoItems" class="shadow" :key="todoItem.item+index">
                 <i class="fa-solid fa-check checkBtn" v-on:click="clickToggleItem('todo', index)"
                     v-bind:class="{ checkBtnCompleted: todoItem.completed }"></i>
                 <span v-bind:class="{ textCompleted: todoItem.completed }">{{ todoItem.item }}</span>
@@ -10,11 +10,11 @@
                     <i class="fas fa-trash-alt"></i>
                 </span>
             </li>
-        </transition-group>
+        </ul>
 
-        <p v-show="propsData.completed.length > 0">다했어! 잘했어!</p>
-        <transition-group name="list" tag ="ul">
-            <li v-for="completedItem, index in propsData.completed" class="shadow" :key="completedItem.item+index">
+        <p v-show="this.$store.state.completedItems.length > 0">다했어! 잘했어!</p>
+        <ul>
+            <li v-for="completedItem, index in this.$store.state.completedItems" class="shadow" :key="completedItem.item+index">
                 <i class="fa-solid fa-check checkBtn checkBtnCompleted"
                     v-on:click="clickToggleItem('completed', index)"></i>
                 <span class="textCompleted">{{ completedItem.item }}</span>
@@ -22,7 +22,7 @@
                     <i class="fas fa-trash-alt"></i>
                 </span>
             </li>
-        </transition-group>
+        </ul>
     </div>
 </template>
 
@@ -77,7 +77,7 @@ li {
 }
 
 /* list item transition 효과 구현 */
-.list-enter-active,
+/* .list-enter-active,
 .list-leave-active {
     transition: all 0.3s ease;
 }
@@ -88,5 +88,5 @@ li {
 .list-leave{
     opacity: 0;
     transform: translateX(3px);
-}
+} */
 </style>
