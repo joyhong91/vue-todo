@@ -28,13 +28,14 @@
 
 <script>
 export default {
-    props: ['propsData'],
     methods: {
         clickDeleteBtn(status, itemParam, index) {
-            this.$emit('emitRemoveItem', status, itemParam, index);
+            this.$store.commit('removeItem', {status, item: itemParam, index});
+            // this.$emit('emitRemoveItem', status, itemParam, index);
         },
         clickToggleItem(status, index) {
-            this.$emit('emitToggleItem', status, index);
+            this.$store.commit('toggleItem',{status, index});
+            // this.$emit('emitToggleItem', status, index);
         }
     }
 }
