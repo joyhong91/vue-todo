@@ -30,10 +30,10 @@
 export default {
     props: ['propsData'],
     methods: {
-        clickDeleteBtn: function (status, itemParam, index) {
+        clickDeleteBtn(status, itemParam, index) {
             this.$emit('emitRemoveItem', status, itemParam, index);
         },
-        clickToggleItem: function (status, index) {
+        clickToggleItem(status, index) {
             this.$emit('emitToggleItem', status, index);
         }
     }

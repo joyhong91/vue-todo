@@ -24,5 +24,8 @@ For detailed explanation on how things work, consult the [docs for vue-loader](h
 - DB 셋팅 
 - 입력날짜 대로 솔팅
 - 우선순위 드래그 변경 기능 구현
+- 마감일 설정 기능
+- 마감일 까지 균등분배 기능 추가
+    - 이행못할시 이월기능까지
 - 입력, 삭제 사운드 효과 추가 
 
