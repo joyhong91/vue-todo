@@ -1,8 +1,8 @@
 <template>
     <div>
-        <p v-show="this.todoItems.length > 0">해야하는거야 게으르지마</p>
+        <p v-show="todoItems.length > 0">해야하는거야 게으르지마</p>
         <ul>
-            <li v-for="todoItem, index in this.todoItems" class="shadow" :key="todoItem.item + index">
+            <li v-for="todoItem, index in todoItems" class="shadow" :key="todoItem.item + index">
                 <i class="fa-solid fa-check checkBtn" v-on:click="toggleItem({isDone: todoItem.completed, index})"
                     v-bind:class="{ checkBtnCompleted: todoItem.completed }"></i>
                 <span v-bind:class="{ textCompleted: todoItem.completed }">{{ todoItem.item }}</span>
@@ -12,9 +12,9 @@
             </li>
         </ul>
 
-        <p v-show="this.completedItems.length > 0">다했어! 잘했어!</p>
+        <p v-show="completedItems.length > 0">다했어! 잘했어!</p>
         <ul>
-            <li v-for="completedItem, index in this.completedItems" class="shadow" :key="completedItem.item + index">
+            <li v-for="completedItem, index in completedItems" class="shadow" :key="completedItem.item + index">
                 <i class="fa-solid fa-check checkBtn checkBtnCompleted"
                     v-on:click="toggleItem({isDone: completedItem.completed, index})"></i>
                 <span class="textCompleted">{{ completedItem.item }}</span>
