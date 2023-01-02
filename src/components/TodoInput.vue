@@ -35,11 +35,8 @@ export default {
     },
     methods: {
         clickAddBtn() {
-            // console.log(this.newTodoItem);
-            // console.log(this.newTodoItem.trim().length)
             if (this.newTodoItem !== '' && this.newTodoItem.trim().length > 0) {
-                // emit은 상위 vue에 이벤트 전달 한다. this.$emit('이벤트 이름', 인자1, 인자2 ...);
-                this.$emit('emitAddItem', this.newTodoItem);
+                this.$store.commit('addItem', this.newTodoItem.trim());
                 this.clearInputBox();
             } else {
                 this.showModal = true;

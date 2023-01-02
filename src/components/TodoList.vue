@@ -1,41 +1,55 @@
 <template>
     <div>
-        <p v-show="propsData.todo.length > 0">해야하는거야 게으르지마</p>
-        <transition-group name="list" tag ="ul">
-            <li v-for="todoItem, index in propsData.todo" class="shadow" :key="todoItem.item+index">
-                <i class="fa-solid fa-check checkBtn" v-on:click="clickToggleItem('todo', index)"
+        <p v-show="todoItems.length > 0">해야하는거야 게으르지마</p>
+        <ul>
+            <li v-for="todoItem, index in todoItems" class="shadow" :key="todoItem.item + index">
+                <i class="fa-solid fa-check checkBtn" v-on:click="toggleItem({isDone: todoItem.completed, index})"
                     v-bind:class="{ checkBtnCompleted: todoItem.completed }"></i>
                 <span v-bind:class="{ textCompleted: todoItem.completed }">{{ todoItem.item }}</span>
-                <span class="removeBtn" v-on:click="clickDeleteBtn('todo', todoItem.item, index)">
+                <span class="removeBtn" v-on:click="removeItem({itemParam: todoItem, index})">
                     <i class="fas fa-trash-alt"></i>
                 </span>
             </li>
-        </transition-group>
+        </ul>
 
-        <p v-show="propsData.completed.length > 0">다했어! 잘했어!</p>
-        <transition-group name="list" tag ="ul">
-            <li v-for="completedItem, index in propsData.completed" class="shadow" :key="completedItem.item+index">
+        <p v-show="completedItems.length > 0">다했어! 잘했어!</p>
+        <ul>
+            <li v-for="completedItem, index in completedItems" class="shadow" :key="completedItem.item + index">
                 <i class="fa-solid fa-check checkBtn checkBtnCompleted"
-                    v-on:click="clickToggleItem('completed', index)"></i>
+                    v-on:click="toggleItem({isDone: completedItem.completed, index})"></i>
                 <span class="textCompleted">{{ completedItem.item }}</span>
-                <span class="removeBtn" v-on:click="clickDeleteBtn('completed', completedItem.item, index)">
+                <span class="removeBtn" v-on:click="removeItem({itemParam: completedItem, index})">
                     <i class="fas fa-trash-alt"></i>
                 </span>
             </li>
-        </transition-group>
+        </ul>
     </div>
 </template>
 
 <script>
+import { mapGetters, mapMutations } from 'vuex'
+
 export default {
-    props: ['propsData'],
     methods: {
-        clickDeleteBtn(status, itemParam, index) {
-            this.$emit('emitRemoveItem', status, itemParam, index);
-        },
-        clickToggleItem(status, index) {
-            this.$emit('emitToggleItem', status, index);
-        }
+        ...mapMutations(['removeItem','toggleItem'])
+        // clickDeleteBtn(status, item, index) {
+        //     console.log(mapMutations);
+        //     this.$store.commit('removeItem', { status, item, index });
+        //     // this.$emit('emitRemoveItem', status, itemParam, index);
+        // },
+        // clickToggleItem(status, index) {
+        //     this.$store.commit('toggleItem', { status, index });
+        //     // this.$emit('emitToggleItem', status, index);
+        // }
+    },
+    computed: {
+        ...mapGetters(['todoItems', 'completedItems'])
+        // todoItems() {
+        //     return this.$store.getters.items.todoItems;
+        // },
+        // completedItems() {
+        //     return this.$store.getters.items.completedItems;
+        // }
     }
 }
 </script>
@@ -77,7 +91,7 @@ li {
 }
 
 /* list item transition 효과 구현 */
-.list-enter-active,
+/* .list-enter-active,
 .list-leave-active {
     transition: all 0.3s ease;
 }
@@ -88,5 +102,5 @@ li {
 .list-leave{
     opacity: 0;
     transform: translateX(3px);
-}
+} */
 </style>
