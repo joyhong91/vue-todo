@@ -28,4 +28,5 @@ For detailed explanation on how things work, consult the [docs for vue-loader](h
 - 마감일 까지 균등분배 기능 추가
     - 이행못할시 이월기능까지
 - 입력, 삭제 사운드 효과 추가 
+- 모달열렸을때 다른 동작 막기 (or 다른 이벤트 클릭발생시 모달 자동 닫힘 )
 
